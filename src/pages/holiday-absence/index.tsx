@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { holidayApplications } from '../../types/documentData'; // 仮データのインポート
 import '../../styles/listStyles.css';
+import Modal from '../../components/molecules/SampleMolecule/modal'
+import Form from './form'
 
 const LeaveApplicationPage: React.FC = () => {
   const [applications, setApplications] = useState(holidayApplications);
@@ -29,14 +31,18 @@ const LeaveApplicationPage: React.FC = () => {
   return (
     <div>
       <h1>有給休暇・欠勤</h1>
-      <button onClick={handleOpenModal}>新規作成</button>
       {/* モーダルのロジック */}
       {showModal && (
         <div>
           {/* モーダルの内容 */}
-          <button onClick={handleCloseModal}>閉じる</button>
+          <Modal isOpen={showModal} onClose={handleCloseModal}>
+            {
+              <Form onClose={handleCloseModal} />
+            }
+          </Modal>
         </div>
       )}
+      <button onClick={handleOpenModal}>新規作成</button>
       <button onClick={handleSortByDate}>提出日でソート</button>
       {/* 期間フィルターの実装 */}
       <div>

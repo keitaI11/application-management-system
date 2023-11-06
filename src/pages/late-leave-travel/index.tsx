@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { lateLeaveTravelApplications } from '../../types/documentData'; // 仮データのインポート
 import '../../styles/listStyles.css';
+import '../../styles/modal.css';
+import Modal from '../../components/molecules/SampleMolecule/modal'
+import Form from './form'
 
 const LateLeaveTravel: React.FC = () => {
   const [applications, setApplications] = useState(lateLeaveTravelApplications);
@@ -29,14 +32,19 @@ const LateLeaveTravel: React.FC = () => {
   return (
     <div>
       <h1>遅刻・早退・外出出張</h1>
-      <button onClick={handleOpenModal}>新規作成</button>
       {/* モーダルコンポーネントとそのロジックをここに追加 */}
       {showModal && (
         <div>
-          {/* モーダルの内容 */}
-          <button onClick={handleCloseModal}>閉じる</button>
+          {
+            <Modal isOpen={showModal} onClose={handleCloseModal}>
+              {
+                <Form onClose={handleCloseModal} />
+              }
+            </Modal>
+          }
         </div>
       )}
+      <button onClick={handleOpenModal}>新規作成</button>
       <button onClick={handleSortByDate}>提出日でソート</button>
       {/* 期間フィルターの実装 */}
       <div>
