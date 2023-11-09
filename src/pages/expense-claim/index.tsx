@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { expenseApplications } from '../../types/documentData'; // 仮データのインポート
 import '../../styles/listStyles.css';
+import Form from './form'
+import Modal from '../../components/molecules/SampleMolecule/modal'
 
 const ExpensePage: React.FC = () => {
     const [applications, setApplications] = useState(expenseApplications);
@@ -22,14 +24,13 @@ const ExpensePage: React.FC = () => {
     return (
         <div>
             <h1>経費申請</h1>
-            <button onClick={handleOpenModal}>新規作成</button>
             {/* モーダルのロジック */}
             {showModal && (
-                <div>
-                    {/* モーダルの内容 */}
-                    <button onClick={handleCloseModal}>閉じる</button>
-                </div>
+                <Modal isOpen={showModal} onClose={handleCloseModal}>
+                    <Form onClose={handleCloseModal} />
+                </Modal>
             )}
+            <button onClick={handleOpenModal}>新規作成</button>
             <button onClick={handleSortByDate}>提出日でソート</button>
             {/* アプリケーションリストの表示 */}
             <table>
